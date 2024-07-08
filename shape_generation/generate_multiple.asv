@@ -1,0 +1,20 @@
+% Demo
+S = rnd_obj();
+imwrite(S.img, "shapes/demo/shape_1.png");
+S_out = rmfield(S, "img");
+S_out = jsonencode(S_out);
+
+
+% Practice
+for i = 1:10
+    S = rnd_obj();
+    imwrite(S.img, "shapes/practice/shape_" + i + ".png");
+end
+
+% Main
+for i = 1:120
+    S = rnd_obj();
+    imwrite(S.img, "shapes/main/shape_" + i + ".png")
+end
+
+

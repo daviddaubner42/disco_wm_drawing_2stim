@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+
+<!-- This file produces the consent form, nicely formatted. Template from Simon Weber 2021   -->
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Participant Information and Consent</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/grids-responsive-min.css">
+  <link rel="stylesheet" href="css/preview_showcase.css">
+  <script src="jatos.js"></script>
+</head>
+
+<body>
+  <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+      <a class="pure-menu-heading" href=""><img src="img/logo.png" height="100pt"></a>
+    </div>
+  </div>
+  <!-- <div class="splash">
+    <h1 class="splash-head">Visual Working Memory - Online Study</h1>
+  </div> -->
+  </div>
+  <div class="content-wrapper">
+
+    <div class="content bold">
+      <h2 class="content-head is-center">Participant Declaration</h2>
+      <p>
+        I hereby confirm that I have read the subject information. I have been informed about the goal, background and
+        purpose of this online study.
+      </p>
+      <p>
+        I understand the regulations about the collection of experimental and personal data and the pseudonymization
+        methods and I agree with the outlined use of this data. I agree that the collected experimental data will be
+        analyzed anonymously and the resulting outcomes may be published.
+      </p>
+      <p>
+        I understand that my participation is voluntary and that I am free to withdraw at any time without giving a
+        reason and without any adverse consequences. I can request the deletion of my data. I understand, however, that
+        deletion is not possible after anonymization.
+      </p>
+      <p>&nbsp;</p>
+      <p style="font-size: 120%">
+        By checking the box below and pressing the button "Start Experiment" you are agreeing to participate in this
+        study.
+      </p>
+
+      <p class="is-center">
+        <style>
+          .conditional_form_part {
+            display: none;
+          }
+
+          .conditional_form_part_activator:checked+.conditional_form_part {
+            display: block;
+          }
+        </style>
+
+      <form style="font-weight: bold; text-align: center; font-size: 150%;">
+        <input class="conditional_form_part_activator" id="checkConsent" type="checkbox">
+        I agree to participate in this study
+
+
+        <div class="conditional_form_part">
+          <button type="button" style="margin-top:30px;" class="pure-button" id="start">
+            Start the experiment!
+          </button>
+        </div>
+      </form>
+
+      </p>
+    </div>
+
+
+    <div class="footer l-box is-center">
+      <table width="100%">
+        <tbody>
+          <tr>
+            <td style="text-align: center;"><strong><span style="color: #ffffff;">Principal
+                  Investigator</span></strong><br />Dr.&nbsp;Thomas Christophel <br />
+              <a href="https://discolab.eu/" style="color: #DE6901">DisCo Lab</a>
+            </td>
+            <td style="text-align: center;">Berlin Center for Advanced Neuroimaging
+              <br />Department of Psychology <br />
+              Distributed Cognition and Memory<br />
+              <hr>Chariteplatz 1, Sauerbruchweg 4
+              10115 Berlin<br />
+            <td style="text-align: center;"><strong><span style="color: #ffffff;">Experimenter</span></strong><br />
+              Joana Sebra <br /><a href="mailto: joana.seabra@bccn-berlin.de"
+                style="color: #DE6901">joana.seabra@bccn-berlin.de</a>&nbsp;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+</body>
+
+</html>

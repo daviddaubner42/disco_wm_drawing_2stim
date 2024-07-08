@@ -1,0 +1,14 @@
+.text_instructions {
+    /* margin-top: 5%; */
+    display: inline-block;
+}
+
+
+h1,
+h2,
+h3 {
+    font-weight: normal;
+    font-family: sans-serif;
+    line-height: 1.25em;
+    z-index: 3;
+}
