@@ -1,26 +1,24 @@
-# The Visual Working Memory Drawing Experiment
-
-## Folder Structure
+## The Visual Working Memory Drawing Experiment
 
 `index.html` - imports the necessary jsPsych plugins, style files, and Jatos
 
 `main.js` - the main jsPsych file, sets up Jatos, defines the overall structure of the experiment and imports all the other components.
 
-# css/
+## css/
 
 Contains the styling files:
 * `style.css` for the whole experiment.
 * `preview_showcase.css` for the consent form.
 
-# consent/
+## consent/
 
 Contains the HTML files defining the individual pages of the consent form. These are then displayed through jsPsych.
 
-# img/
+## img/
 
 Contains the images used in the instructions, and three folders with the stimuli images: `demo/`, `practice/`, and `main/`. The stimuli images are generated and saved to these folders by running a Matlab script. See the section on `shape_generation/` for details.
 
-# js/
+## js/
 
 Contains the files defining the 6 parts of the experiment: Consent, Familiarisation, Demo, Practice, Main Experiment, and Questionnaire.
 
@@ -28,11 +26,11 @@ This folder also contains utility files defining jsPsych components used repeate
 
 There is also the `plugin-sketchpad-custom.js`, which is the jsPsych sketchpad plugin file modified for the purposes of this experiment to include an eraser.
 
-# jspsych/
+## jspsych/
 
 Contains the jsPsych library
 
-# shape_generation/
+## shape_generation/
 
 This folder contains the matlab scripts used to generate the stimuli images.
 
