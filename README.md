@@ -4,6 +4,8 @@
 
 `main.js` - the main jsPsych file, sets up Jatos, defines the overall structure of the experiment and imports all the other components.
 
+`data_analysis.mlx` - the Matlab live script file used to explore and analyse the data.
+
 ## css/
 
 Contains the styling files:
@@ -41,3 +43,7 @@ If you need to change some properties of the stimuli, this can be done by modify
 The actual generation script is in the `rnd_obj.m` file, but this does not need to be modified unless the desired changes go beyond the parameters in `stimulus_parameter.m`.
 
 The other files are utility scripts used for stimulus generation.
+
+## data/
+
+Contains the participants' data collected so far.
