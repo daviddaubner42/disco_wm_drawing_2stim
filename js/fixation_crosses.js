@@ -30,4 +30,4 @@ const iti_fixation = {
     }
 }
 
-export { fixation as fixation, isi_fixation, iti_fixation as iti_fixation };
+export { fixation as fixation, iti_fixation as iti_fixation };
