@@ -47,3 +47,7 @@ The other files are utility scripts used for stimulus generation.
 ## data/
 
 Contains the participants' data collected so far.
+
+## data_analysis/
+
+Contains utility scripts used by `data_analysis.mlx`
