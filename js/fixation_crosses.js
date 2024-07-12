@@ -14,6 +14,20 @@ const fixation = {
     }
 }
 
+// The fixation cross used between the two stimuli
+const isi_fixation = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `<div style="font-size:60px;">+</div>`,
+    choices: "NO_KEYS",
+    trial_duration: 200,
+    on_start: function(trial) {
+        document.body.style.cursor= "none";
+    },
+    on_finish: function(trial) {
+        document.body.style.cursor= "auto";
+    }
+}
+
 // The fixation cross used in the intertrial interval
 const iti_fixation = {
     type: jsPsychHtmlKeyboardResponse,
@@ -30,4 +44,4 @@ const iti_fixation = {
     }
 }
 
-export { fixation as fixation, iti_fixation as iti_fixation };
+export { fixation as fixation, isi_fixation as isi_fixation, iti_fixation as iti_fixation };

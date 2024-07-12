@@ -1,10 +1,10 @@
-## The Visual Working Memory Drawing Experiment
+## The Visual Working Memory Drawing Experiment with load variation
 
 `index.html` - imports the necessary jsPsych plugins, style files, and Jatos
 
 `main.js` - the main jsPsych file, sets up Jatos, defines the overall structure of the experiment and imports all the other components.
 
-`data_analysis.mlx` - the Matlab live script file used to explore and analyse the data.
+`data_analysis.mlx` - the Matlab live script file used to explore and analyse the data. (So far this is the version for the stimulus duration version, it contains the main building blocks necessary for this experiment, but has not been adapted yet.)
 
 ## css/
 
@@ -46,7 +46,7 @@ The other files are utility scripts used for stimulus generation.
 
 ## data/
 
-Contains the participants' data collected so far.
+Contains the participants' data collected so far. (i.e. nothing for this experiment yet)
 
 ## data_analysis/
 

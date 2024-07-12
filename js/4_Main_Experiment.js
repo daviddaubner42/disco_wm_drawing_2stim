@@ -1,4 +1,4 @@
-import { fixation, iti_fixation } from "./fixation_crosses.js";
+import { fixation, isi_fixation, iti_fixation } from "./fixation_crosses.js";
 
 function countdown(seconds) {
     // This function is necessary for the countdown during pause to work.
@@ -33,29 +33,47 @@ function countdown(seconds) {
 function main_builder(jsPsych) {
 
     // Define parameters
-    const num_blocks = 6; // 6
-    const trials_in_block = 30; // 30
+    const num_blocks = 2; // 6
+    const trials_in_block = 2; // 30
     const pause_length = 180; // 180
 
-    var stim_names = [];
+    var stim_names1 = [];
     for (var i = 0; i < num_blocks; i++) {
-        for (var j = 0; j < Math.ceil(trials_in_block/2); j++) {
-            stim_names.push("img/main/stim_" + (i*trials_in_block/2 + j + 1) + ".png");
+        for (var j = 0; j < Math.ceil(trials_in_block); j++) {
+            stim_names1.push("img/main/stim_" + (i*trials_in_block + j + 1) + ".png");
+        }
+    }
+    var stim_names2 = [];
+    for (var i = num_blocks; i < 2*num_blocks; i++) {
+        for (var j = 0; j < Math.ceil(trials_in_block); j++) {
+            stim_names2.push("img/main/stim_" + (i*trials_in_block + j + 1) + ".png");
         }
     }
 
-    // Combine each stimulus with each of the stimulus durations to create a list of timeline variables
-    var factors = {
-        stimulus: stim_names,
-        stim_dur: [100, 1000]
+    // Shuffle the stimulus names before constructing the trial variables
+    stim_names1 = stim_names1.sort((a, b) => 0.5 - Math.random());
+    stim_names2 = stim_names2.sort((a, b) => 0.5 - Math.random());
+
+    var main_vars = [];
+    for (var i = 0; i < num_blocks*trials_in_block; i++) {
+        main_vars.push({ stim_1: stim_names1[i], stim_2: stim_names2[i]});
     }
-    var main_vars = jsPsych.randomization.factorial(factors, 1);
+
+    // Create list of cues to be used in the trials
+    var cues = jsPsych.randomization.sampleWithReplacement([1, 2], num_blocks*trials_in_block);
+
+    // Add the cues to the trial variables
+    for (var i = 0; i < main_vars.length; i++) {
+        main_vars[i]['cue'] = cues[i];
+    }
 
     // Append the block number to each of the timeline variables
-    // This leads to structure like { stimulus: "stim/path/something.png", stim_dur: 100, block: 2 }
+    // This leads to structure like { stim_1: "stim/path/something.png", stim_2: "stim/path/something_else.png", block: 2 }
     for (var i = 0; i < main_vars.length; i++) {
         main_vars[i]['block'] = Math.floor(i/trials_in_block) + 1;
     }
+
+    console.log(main_vars);
 
     const main_instructions = {
         type: jsPsychHtmlKeyboardResponse,
@@ -78,11 +96,11 @@ function main_builder(jsPsych) {
         choices: [' ']
     }
 
-    const main_stimulus = {
+    const main_stimulus1 = {
         type: jsPsychImageKeyboardResponse,
-        stimulus: jsPsych.timelineVariable('stimulus'),
+        stimulus: jsPsych.timelineVariable('stim_1'),
         choices: "NO_KEYS",
-        trial_duration: jsPsych.timelineVariable('stim_dur'),
+        trial_duration: 750,
         stimulus_width: 400,
         stimulus_height: 400,
         // Make the cursor disappear while the stimulus is displayed
@@ -91,6 +109,38 @@ function main_builder(jsPsych) {
         },
         on_finish: function(trial) {
             document.body.style.cursor = "auto";
+        }
+    }
+
+    const main_stimulus2 = {
+        type: jsPsychImageKeyboardResponse,
+        stimulus: jsPsych.timelineVariable('stim_2'),
+        choices: "NO_KEYS",
+        trial_duration: 750,
+        stimulus_width: 400,
+        stimulus_height: 400,
+        // Make the cursor disappear while the stimulus is displayed
+        on_start: function(trial) {
+            document.body.style.cursor = "none";
+        },
+        on_finish: function(trial) {
+            document.body.style.cursor = "auto";
+        }
+    }
+
+    const cue = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: "<h1 style=\"font-size: 800%;\"><strong>" + jsPsych.randomization.sampleWithoutReplacement([1, 2], 1)[0] + "</strong></h1>",
+        choices: "NO_KEYS",
+        trial_duration: 500,
+        on_start: function(trial) {
+            document.body.style.cursor= "none";
+        },
+        on_finish: function(trial) {
+            document.body.style.cursor= "auto";
+        },
+        data: {
+            task: 'cue'
         }
     }
 
@@ -110,7 +160,7 @@ function main_builder(jsPsych) {
             task: 'main_experiment',
             stimulus_path: jsPsych.timelineVariable('stimulus'),
             block: jsPsych.timelineVariable('block'),
-            stim_dur: jsPsych.timelineVariable('stim_dur')
+            cue: jsPsych.data.get().filter({task: 'cue'}).last(1).values()[0]
         },
         on_finish: function (data) {
             // Save whether the participant drew anything
@@ -196,7 +246,7 @@ function main_builder(jsPsych) {
 
         // Creates the trials to be used in this block
         const procedure = {
-            timeline: [main_stimulus, fixation, main_recall, main_feedback_conditional, iti_fixation],
+            timeline: [main_stimulus1, isi_fixation, main_stimulus2, isi_fixation, cue, fixation, main_recall, main_feedback_conditional, iti_fixation],
             timeline_variables: main_vars.slice(i*trials_in_block, (i+1)*trials_in_block),
             randomize_order: true
         }

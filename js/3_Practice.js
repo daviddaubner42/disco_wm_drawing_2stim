@@ -1,4 +1,4 @@
-import { fixation, iti_fixation } from "./fixation_crosses.js";
+import { fixation, isi_fixation, iti_fixation } from "./fixation_crosses.js";
 
 // This is a wrapper function for the Practice part of the experiment.
 // It defines the individual components and specifies their order.
@@ -20,37 +20,81 @@ function practice_builder(jsPsych) {
 
     var n_practice = 6; // the number of practice trials to be done
 
-    // Create a list of stimuli to be used in practice.
-    var practice_stims = [];
+    // Create lists of stimuli to be used in practice.
+    var practice_stims1 = [];
     for (var i = 1; i <= n_practice; i++) {
-        practice_stims.push("img/practice/stim_" + i + ".png");
+        practice_stims1.push("img/practice/stim_" + i + ".png");
+    }
+    var practice_stims2 = [];
+    for (var i = 1; i <= n_practice; i++) {
+        practice_stims2.push("img/practice/stim_" + (n_practice + i) + ".png");
     }
 
-    // Create a list of stimulus durations to be used in practice.
-    var stim_durs = jsPsych.randomization.sampleWithReplacement([100, 1000], n_practice);
+    // Shuffle the stimulus names before constructing the trial variables
+    practice_stims1 = practice_stims1.sort((a, b) => 0.5 - Math.random());
+    practice_stims2 = practice_stims2.sort((a, b) => 0.5 - Math.random());
 
-    // Combine the stimuli and stimulus durations to create a list of timeline variables
     var practice_vars = [];
     for (var i = 0; i < n_practice; i++) {
-        practice_vars.push({ 
-            stimulus: practice_stims[i],
-            stim_dur: stim_durs[i]
-        })
+        practice_vars.push({ stim_1: practice_stims1[i], stim_2: practice_stims2[i]});
     }
 
-    const practice_stimulus = {
+    // Create list of cues to be used in the trials
+    var cues = jsPsych.randomization.sampleWithReplacement([1, 2], n_practice);
+
+    // Add the cues to the trial variables
+    for (var i = 0; i < n_practice; i++) {
+        practice_vars[i]['cue'] = cues[i];
+    }
+
+    console.log(practice_vars);
+
+    const practice_stimulus1 = {
         type: jsPsychImageKeyboardResponse,
-        stimulus: jsPsych.timelineVariable('stimulus'),
+        stimulus: jsPsych.timelineVariable('stim_1'),
         choices: "NO_KEYS",
-        trial_duration: jsPsych.timelineVariable('stim_dur'),
+        trial_duration: 750,
         stimulus_width: 400,
         stimulus_height: 400,
-        // Make the cursor disappear while the stimulus is displayed
         on_start: function(trial) {
             document.body.style.cursor= "none";
         },
         on_finish: function(trial) {
             document.body.style.cursor= "auto";
+        }
+    }
+
+    const practice_stimulus2 = {
+        type: jsPsychImageKeyboardResponse,
+        stimulus: jsPsych.timelineVariable('stim_2'),
+        choices: "NO_KEYS",
+        trial_duration: 750,
+        stimulus_width: 400,
+        stimulus_height: 400,
+        on_start: function(trial) {
+            document.body.style.cursor= "none";
+        },
+        on_finish: function(trial) {
+            document.body.style.cursor= "auto";
+        }
+    }
+
+    const cue = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: function () {
+            return "<h1 style=\"font-size: 800%;\"><strong>" + jsPsych.timelineVariable('cue').toString() + "</strong></h1>";
+        },
+        choices: "NO_KEYS",
+        trial_duration: 500,
+        on_start: function(trial) {
+            document.body.style.cursor= "none";
+        },
+        on_finish: function(trial) {
+            document.body.style.cursor= "auto";
+        },
+        data: {
+            task: 'cue',
+            cue: jsPsych.timelineVariable('cue')
         }
     }
 
@@ -70,7 +114,9 @@ function practice_builder(jsPsych) {
             task: 'practice',
             stimulus_path: jsPsych.timelineVariable('stimulus'),
             block: 'practice',
-            stim_dur: jsPsych.timelineVariable('stim_dur')
+            cue: function () {
+                return jsPsych.data.get().filter({task: 'cue'}).trials.slice(-1)[0].cue;
+            }
         },
         on_finish: function (data) {
             // Save whether the participant drew anything
@@ -108,7 +154,7 @@ function practice_builder(jsPsych) {
 
     // Creates the practice trials
     var practice = {
-        timeline: [practice_stimulus, fixation, practice_recall, practice_feedback_conditional, iti_fixation],
+        timeline: [practice_stimulus1, isi_fixation, practice_stimulus2, isi_fixation, cue, fixation, practice_recall, practice_feedback_conditional, iti_fixation],
         timeline_variables: practice_vars,
         randomize_order: true
     }

@@ -21,7 +21,7 @@ function demo_builder(jsPsych) {
             + "Press the \"Next\" button to continue.</div>"
     }
 
-    const demo_stimulus_inst = {
+    const demo_stimulus_inst1 = {
         type: jsPsychHtmlKeyboardResponse,
         stimulus: '<img src="img/demo/stim_1.png" style="width: 400px; height=400px;"></img>',
         choices: [' '],
@@ -29,7 +29,7 @@ function demo_builder(jsPsych) {
         stimulus_height: 250,
         prompt: "<div class='text_instructions'><br><hr width='90%'>"
             + "<h2>Afterwards, you will see a shape on the screen.</br>"
-            + "Later you will be asked to draw it, so try to remember it as accurately as possible.</br>" 
+            + "Later you might be asked to draw it, so try to remember it as accurately as possible.</br>" 
             + "In the actual experiment, this shape will only appear for a very short time. </h2>"
             + "Press the \"Next\" button to continue.</div>"
     }
@@ -39,7 +39,44 @@ function demo_builder(jsPsych) {
         stimulus: `<div style="font-size:60px; margin-bottom: 7%;">+</div>`,
         choices: [' '],
         prompt: "<div class='text_instructions'><br><hr width='90%'>"
-            + "<h2>After the shape disappears, there will be several seconds of delay when you should keep your eyes " 
+            + "<h2>After the first shape disappears, there will be a very short pause... </h2> Press the \"Next\" button to continue.</div>"
+    }
+
+    const demo_stimulus_inst2 = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: '<img src="img/demo/stim_2.png" style="width: 400px; height=400px;"></img>',
+        choices: [' '],
+        stimulus_width: 250,
+        stimulus_height: 250,
+        prompt: "<div class='text_instructions'><br><hr width='90%'>"
+            + "<h2>... before a second shape appears.</br>"
+            + "Later you might be asked to draw it, so try to remember it as accurately as possible.</br>" 
+            + "In the actual experiment, this shape will also only appear for a very short time. </h2>"
+            + "Press the \"Next\" button to continue.</div>"
+    }
+
+    const demo_fixation_3 = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<div style="font-size:60px; margin-bottom: 7%;">+</div>`,
+        choices: [' '],
+        prompt: "<div class='text_instructions'><br><hr width='90%'>"
+            + "<h2>After the second shape disappears, there will be another very short pause... </h2> Press the \"Next\" button to continue.</div>"
+    }
+
+    const demo_cue = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: "<h1 style=\"font-size: 800%;\"><strong>1</strong></h1>",
+        choices: [' '],
+        prompt: "<div class='text_instructions'><br><hr width='90%'>"
+            + "<h2>... before a cue appears telling you which of the two shapes to remember: 1st or 2nd. </h2> Press the \"Next\" button to continue.</div>"
+    }
+
+    const demo_fixation_4 = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<div style="font-size:60px; margin-bottom: 7%;">+</div>`,
+        choices: [' '],
+        prompt: "<div class='text_instructions'><br><hr width='90%'>"
+            + "<h2>After the cue disappears, there will be several seconds of delay when you should keep your eyes " 
             + "fixed on the cross in the center of the screen. </h2> Press the \"Next\" button to continue.</div>"
     }
 
@@ -48,7 +85,7 @@ function demo_builder(jsPsych) {
         stimulus: 'img/shape_closing_example.png',
         choices: [' '],
         prompt: "<div class='text_instructions'><br><hr width='90%'>"
-                + "<h2>Next you will be asked to draw the shape you saw at the beginning of the trial."
+                + "<h2>Next you will be asked to draw the shape indicated by the cue you saw."
                 + "<br> Please only draw the contour of the shape (don't colour the inside!).</br>" 
                 + "Also make sure to <strong><u>draw the entire outline, without any holes</u></strong>.</h2>"
                 + "Press the \"Next\" button to continue.</div>"
@@ -108,7 +145,7 @@ function demo_builder(jsPsych) {
             + "when you should keep your eyes fixed on the cross. </h2> Press the \"Next\" button to continue.</div>"
     }
 
-    var demo = [demo_fixation_1, demo_stimulus_inst, demo_fixation_2, demo_close_shape, looping_recall_feedback, demo_iti_fixation];
+    var demo = [demo_fixation_1, demo_stimulus_inst1, demo_fixation_2, demo_stimulus_inst2, demo_fixation_3, demo_cue, demo_fixation_4, demo_close_shape, looping_recall_feedback, demo_iti_fixation];
 
     // The demo timeline
     const demo_exp = {

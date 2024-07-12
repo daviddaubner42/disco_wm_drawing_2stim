@@ -6,8 +6,8 @@
 % ----------------------------------------------------------------
 
 % Number of stimuli to generate for each part of the experiment
-n_demo = 1;
-n_practice = 10;
+n_demo = 2;
+n_practice = 12;
 n_main = 120;
 
 % Demo
